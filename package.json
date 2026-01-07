@@ -1,0 +1,19 @@
+{
+  "name": "localnotes",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w frontend",
+    "dev:backend": "npm run start:dev -w backend",
+    "dev:all": "powershell -NoProfile -Command \"Start-Process powershell -ArgumentList ' -NoProfile -Command npm run dev -w frontend'; npm run start:dev -w backend\"",
+    "build": "npm run build -w frontend; npm run build -w backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
