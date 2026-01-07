@@ -9,6 +9,10 @@ type Props = {
   status: SyncStatus;
 };
 
+/**
+ * Display sync status of a single note
+ * Shows green checkmark for synced, yellow clock for pending, red error for failed
+ */
 export function SyncStatusChip({ status }: Props) {
   if (status === 'synced') {
     return (

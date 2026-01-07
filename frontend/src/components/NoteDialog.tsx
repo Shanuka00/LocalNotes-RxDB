@@ -19,13 +19,14 @@ type NoteDraft = {
 };
 
 type Props = {
-  open: boolean;
-  mode: 'create' | 'edit';
-  note?: NoteDocType;
-  onCancel: () => void;
-  onSave: (draft: NoteDraft) => void;
+  open: boolean; // Whether dialog is visible
+  mode: 'create' | 'edit'; // Create new note or edit existing
+  note?: NoteDocType; // Note to edit (only for edit mode)
+  onCancel: () => void; // Called when user cancels
+  onSave: (draft: NoteDraft) => void; // Called when user saves
 };
 
+// Parse comma-separated tags into array
 function parseTags(input: string): string[] {
   return input
     .split(',')
@@ -33,7 +34,12 @@ function parseTags(input: string): string[] {
     .filter(Boolean);
 }
 
+/**
+ * Dialog for creating or editing a note
+ * Supports title, content, and comma-separated tags
+ */
 export function NoteDialog({ open, mode, note, onCancel, onSave }: Props) {
+  // Initialize form with existing note data (edit mode) or empty (create mode)
   const initial = useMemo<NoteDraft>(() => {
     if (mode === 'edit' && note) {
       return { title: note.title, content: note.content, tags: note.tags };

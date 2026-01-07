@@ -3,10 +3,13 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { NotesPage } from './pages/NotesPage';
 
-const theme = createTheme({
-  // Keep defaults; MUI handles a clean professional baseline.
-});
+// Create Material-UI theme (using defaults)
+const theme = createTheme();
 
+/**
+ * Root application component
+ * Sets up Material-UI theme and renders main page
+ */
 export default function App() {
   return (
     <ThemeProvider theme={theme}>

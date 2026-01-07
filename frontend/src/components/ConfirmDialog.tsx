@@ -6,15 +6,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 type Props = {
-  open: boolean;
-  title: string;
-  message: string;
-  confirmText?: string;
-  cancelText?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+  open: boolean; // Whether dialog is visible
+  title: string; // Dialog title
+  message: string; // Confirmation message
+  confirmText?: string; // Text for confirm button (default: 'Delete')
+  cancelText?: string; // Text for cancel button (default: 'Cancel')
+  onConfirm: () => void; // Called when user confirms
+  onCancel: () => void; // Called when user cancels
 };
 
+/**
+ * Reusable confirmation dialog
+ * Used for delete confirmation and other destructive actions
+ */
 export function ConfirmDialog({
   open,
   title,

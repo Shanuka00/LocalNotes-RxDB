@@ -1,5 +1,11 @@
+/**
+ * Get current timestamp as ISO string
+ * 
+ * ISO strings:
+ * - Compare correctly lexicographically
+ * - Serialize cleanly for API requests
+ * - Standard format for timestamps
+ */
 export function nowIso(): string {
-  // We store timestamps as ISO strings so they compare lexicographically and
-  // serialize cleanly for sync payloads.
   return new Date().toISOString();
 }

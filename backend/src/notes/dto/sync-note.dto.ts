@@ -8,6 +8,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+/**
+ * DTO for note data in sync request
+ * Validates the structure of note payload
+ */
 export class SyncNotePayloadDto {
   @IsUUID()
   id: string;
@@ -29,6 +33,10 @@ export class SyncNotePayloadDto {
   isDeleted: boolean;
 }
 
+/**
+ * DTO for sync request from client
+ * Validates entity type, action type, and payload structure
+ */
 export class SyncNoteRequestDto {
   @IsIn(['note'])
   entity: 'note';

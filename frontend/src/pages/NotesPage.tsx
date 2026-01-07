@@ -22,33 +22,42 @@ import { useSyncSummary } from '../hooks/useSyncSummary';
 import { NotesService } from '../services/NotesService';
 import type { NoteDocType } from '../types/notes';
 
+/**
+ * Main page component for the notes app
+ * 
+ * Features:
+ * - Displays list of notes from RxDB (reactive)
+ * - Search notes by title, content, or tags
+ * - Create, edit, and delete notes
+ * - Shows online/offline status and sync state
+ * - Automatically syncs with server when online
+ */
 export function NotesPage() {
+  // Track online status and sync state
   const online = useOnlineStatus();
   const syncSummary = useSyncSummary();
 
-  // Kicks the queue processor when we become online.
+  // Automatically process sync queue when online
   useSyncProcessor();
 
+  // Search and notes list
   const [search, setSearch] = useState('');
-  const notes = useNotes(search);
+  const notes = useNotes(search); // Reactive query from RxDB
 
+  // Dialog state for creating/editing notes
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<'create' | 'edit'>('create');
   const [editing, setEditing] = useState<NoteDocType | undefined>(undefined);
 
+  // Delete confirmation state
   const [deleteTarget, setDeleteTarget] = useState<NoteDocType | undefined>(undefined);
-
-  const bannerOnline = online;
-  const bannerAllSynced = syncSummary.allSynced;
-
-  const title = useMemo(() => 'LocalNotes', []);
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {title}
+            LocalNotes
           </Typography>
 
           <TextField
@@ -68,7 +77,7 @@ export function NotesPage() {
         </Toolbar>
       </AppBar>
 
-      <StatusBanner online={bannerOnline} allSynced={bannerAllSynced} />
+      <StatusBanner online={online} allSynced={syncSummary.allSynced} />
 
       <Container maxWidth="md" sx={{ py: 2, flex: 1 }}>
         <Stack spacing={2}>

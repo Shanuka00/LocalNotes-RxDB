@@ -13,11 +13,14 @@ import type { NoteDocType } from '../types/notes';
 import { SyncStatusChip } from './SyncStatusChip';
 
 type Props = {
-  notes: NoteDocType[];
-  onEdit: (note: NoteDocType) => void;
-  onDelete: (note: NoteDocType) => void;
+  notes: NoteDocType[]; // List of notes to display
+  onEdit: (note: NoteDocType) => void; // Called when edit button clicked
+  onDelete: (note: NoteDocType) => void; // Called when delete button clicked
 };
 
+/**
+ * Display list of notes with edit and delete actions
+ */
 export function NotesList({ notes, onEdit, onDelete }: Props) {
   if (notes.length === 0) {
     return (

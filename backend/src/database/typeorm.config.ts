@@ -3,6 +3,14 @@ import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { NoteEntity } from '../notes/notes.entity';
 
+/**
+ * Build TypeORM configuration from environment variables
+ * 
+ * Configuration:
+ * - MySQL database connection
+ * - Auto-sync schema in development (use migrations in production)
+ * - Logging enabled in development
+ */
 export function buildTypeOrmOptions(config: ConfigService): TypeOrmModuleOptions {
   const nodeEnv = config.get<string>('NODE_ENV') ?? 'development';
 
@@ -15,9 +23,10 @@ export function buildTypeOrmOptions(config: ConfigService): TypeOrmModuleOptions
     database: config.get<string>('DB_NAME') ?? 'localnotes',
     entities: [NoteEntity],
 
-    // WHY: Auto-sync schema is convenient for local dev; production should use migrations.
+    // Auto-sync schema in development (NEVER use in production)
     synchronize: nodeEnv !== 'production',
 
+    // Enable SQL query logging in development
     logging: nodeEnv !== 'production',
   };
 }

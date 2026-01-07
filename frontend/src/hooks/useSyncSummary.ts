@@ -8,13 +8,22 @@ import type { NoteDocType, SyncQueueItemDocType } from '../types/notes';
 import { useRxObservable } from './useRxObservable';
 
 export type SyncSummary = {
-  queueLength: number;
-  pendingNotes: number;
-  failedNotes: number;
-  allSynced: boolean;
+  queueLength: number; // Number of operations waiting to sync
+  pendingNotes: number; // Number of notes marked as pending
+  failedNotes: number; // Number of notes that failed to sync
+  allSynced: boolean; // True if everything is synced
 };
 
+/**
+ * Hook to get sync status summary
+ * 
+ * Provides reactive information about:
+ * - How many operations are queued
+ * - How many notes have pending/failed sync status
+ * - Whether everything is fully synced
+ */
 export function useSyncSummary(): SyncSummary {
+  // Create reactive query for sync queue (updates when queue changes)
   const queue$ = useMemo(() => {
     return from(getDb()).pipe(
       switchMap((db) => db.collections[SYNC_QUEUE_COLLECTION].find({ sort: [{ createdAt: 'asc' }] }).$),
@@ -23,6 +32,7 @@ export function useSyncSummary(): SyncSummary {
     );
   }, []);
 
+  // Create reactive query for notes (updates when notes change)
   const notes$ = useMemo(() => {
     return from(getDb()).pipe(
       switchMap((db) => db.collections[NOTE_COLLECTION].find({ selector: { isDeleted: false } }).$),
@@ -31,9 +41,11 @@ export function useSyncSummary(): SyncSummary {
     );
   }, []);
 
+  // Subscribe to both observables
   const queue = useRxObservable<SyncQueueItemDocType[]>(queue$, []);
   const notes = useRxObservable<NoteDocType[]>(notes$, []);
 
+  // Calculate sync status from current data
   const pendingNotes = notes.filter((n) => n.syncStatus === 'pending').length;
   const failedNotes = notes.filter((n) => n.syncStatus === 'failed').length;
 
