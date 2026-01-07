@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { CleanupService } from '../services/CleanupService';
 import { SyncService } from '../services/SyncService';
 import { useOnlineStatus } from './useOnlineStatus';
 import { useSyncSummary } from './useSyncSummary';
@@ -46,6 +47,11 @@ export function useSyncProcessor(): void {
       } catch {
         // Ignore errors
       }
+
+      // Step 4: Run cleanup in background (don't block UI or sync)
+      // Remove old soft-deleted notes and queue items to prevent storage bloat
+      // Use void to fire-and-forget so cleanup errors don't crash sync
+      void CleanupService.runCleanup(7, 7);
     };
 
     run();
