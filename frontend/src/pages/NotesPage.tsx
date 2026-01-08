@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { NoteDialog } from '../components/NoteDialog';
@@ -53,33 +53,62 @@ export function NotesPage() {
   const [deleteTarget, setDeleteTarget] = useState<NoteDocType | undefined>(undefined);
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            LocalNotes
-          </Typography>
-
-          <TextField
-            size="small"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search notes"
-            sx={{ width: { xs: 170, sm: 280 } }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon fontSize="small" />
-                </InputAdornment>
-              ),
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <AppBar position="sticky" elevation={0}>
+        <Toolbar sx={{ px: { xs: 1, sm: 2 } }}>
+          <Container
+            maxWidth="md"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              px: { xs: 1, sm: 3 },
             }}
-          />
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: 0.2,
+                backgroundImage:
+                  'linear-gradient(90deg, rgba(168, 85, 247, 1), rgba(217, 70, 239, 1))',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
+              Local Notes
+            </Typography>
+
+            <TextField
+              size="small"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search notes"
+              sx={{ width: { xs: 180, sm: 340 } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Container>
         </Toolbar>
       </AppBar>
 
-      <StatusBanner online={online} allSynced={syncSummary.allSynced} />
-
       <Container maxWidth="md" sx={{ py: 2, flex: 1 }}>
+        <Box sx={{ mb: 2 }}>
+          <StatusBanner online={online} allSynced={syncSummary.allSynced} />
+        </Box>
+
         <Stack spacing={2}>
           <NotesList
             notes={notes}
@@ -96,7 +125,12 @@ export function NotesPage() {
       <Fab
         color="primary"
         aria-label="Add note"
-        sx={{ position: 'fixed', right: 24, bottom: 24 }}
+        sx={{
+          position: 'fixed',
+          right: 24,
+          bottom: 24,
+          border: '1px solid rgba(168, 85, 247, 0.22)',
+        }}
         onClick={() => {
           setEditing(undefined);
           setDialogMode('create');

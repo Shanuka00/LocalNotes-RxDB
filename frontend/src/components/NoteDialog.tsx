@@ -61,7 +61,17 @@ export function NoteDialog({ open, mode, note, onCancel, onSave }: Props) {
   const canSave = title.trim().length > 0;
 
   return (
-    <Dialog open={open} onClose={onCancel} maxWidth="sm" fullWidth>
+    <Dialog
+      open={open}
+      onClose={onCancel}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 3,
+        },
+      }}
+    >
       <DialogTitle>{mode === 'create' ? 'Create Note' : 'Edit Note'}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>

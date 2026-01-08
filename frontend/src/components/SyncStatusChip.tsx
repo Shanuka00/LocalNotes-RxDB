@@ -22,6 +22,10 @@ export function SyncStatusChip({ status }: Props) {
         icon={<CheckCircleOutlineIcon />}
         label="Synced"
         variant="outlined"
+        sx={{
+          backgroundColor: 'rgba(52, 211, 153, 0.06)',
+          borderColor: 'rgba(52, 211, 153, 0.30)',
+        }}
       />
     );
   }
@@ -34,6 +38,10 @@ export function SyncStatusChip({ status }: Props) {
         icon={<ErrorOutlineIcon />}
         label="Not Synced"
         variant="outlined"
+        sx={{
+          backgroundColor: 'rgba(251, 113, 133, 0.06)',
+          borderColor: 'rgba(251, 113, 133, 0.30)',
+        }}
       />
     );
   }
@@ -45,6 +53,10 @@ export function SyncStatusChip({ status }: Props) {
       icon={<ScheduleIcon />}
       label="Not Synced"
       variant="outlined"
+      sx={{
+        backgroundColor: 'rgba(251, 191, 36, 0.06)',
+        borderColor: 'rgba(251, 191, 36, 0.30)',
+      }}
     />
   );
 }
