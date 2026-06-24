@@ -25,6 +25,20 @@ export function StatusBanner({ online, allSynced }: Props) {
     );
   }
 
+  if (!online && allSynced) {
+    return (
+      <Alert
+        severity="warning"
+        variant="standard"
+        sx={{
+          borderColor: 'rgba(250, 204, 21, 0.30)',
+        }}
+      >
+        You are offline
+      </Alert>
+    );
+  }
+
   // Show warning when changes are not synced (offline or pending operations)
   const label = online ? 'Online - Changes not synced' : 'Offline - Changes not synced';
   return (
